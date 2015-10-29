@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_alpha-dgvb" default="compile.module.alpha-dgvb">
+  <dirname property="module.alpha-dgvb.basedir" file="${ant.file.module_alpha-dgvb}"/>
+  
+  <property name="module.jdk.home.alpha-dgvb" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.alpha-dgvb" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.alpha-dgvb" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.alpha-dgvb" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="alpha-dgvb.output.dir" value="${module.alpha-dgvb.basedir}/out/production/Alpha-dgvb"/>
+  <property name="alpha-dgvb.testoutput.dir" value="${module.alpha-dgvb.basedir}/out/test/Alpha-dgvb"/>
+  
+  <path id="alpha-dgvb.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="alpha-dgvb.module.production.classpath">
+    <path refid="${module.jdk.classpath.alpha-dgvb}"/>
+    <path refid="library.opencv-3001.classpath"/>
+  </path>
+  
+  <path id="alpha-dgvb.runtime.production.module.classpath">
+    <pathelement location="${alpha-dgvb.output.dir}"/>
+    <path refid="library.opencv-3001.classpath"/>
+  </path>
+  
+  <path id="alpha-dgvb.module.classpath">
+    <path refid="${module.jdk.classpath.alpha-dgvb}"/>
+    <pathelement location="${alpha-dgvb.output.dir}"/>
+    <path refid="library.opencv-3001.classpath"/>
+  </path>
+  
+  <path id="alpha-dgvb.runtime.module.classpath">
+    <pathelement location="${alpha-dgvb.testoutput.dir}"/>
+    <pathelement location="${alpha-dgvb.output.dir}"/>
+    <path refid="library.opencv-3001.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.alpha-dgvb">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.alpha-dgvb">
+    <patternset refid="excluded.from.module.alpha-dgvb"/>
+  </patternset>
+  
+  <path id="alpha-dgvb.module.sourcepath">
+    <dirset dir="${module.alpha-dgvb.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.alpha-dgvb" depends="compile.module.alpha-dgvb.production,compile.module.alpha-dgvb.tests" description="Compile module Alpha-dgvb"/>
+  
+  <target name="compile.module.alpha-dgvb.production" depends="register.custom.compilers" description="Compile module Alpha-dgvb; production classes">
+    <mkdir dir="${alpha-dgvb.output.dir}"/>
+    <javac2 destdir="${alpha-dgvb.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.alpha-dgvb}/javac">
+      <compilerarg line="${compiler.args.alpha-dgvb}"/>
+      <bootclasspath refid="alpha-dgvb.module.bootclasspath"/>
+      <classpath refid="alpha-dgvb.module.production.classpath"/>
+      <src refid="alpha-dgvb.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.alpha-dgvb"/>
+    </javac2>
+    
+    <copy todir="${alpha-dgvb.output.dir}">
+      <fileset dir="${module.alpha-dgvb.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.alpha-dgvb.tests" depends="register.custom.compilers,compile.module.alpha-dgvb.production" description="compile module Alpha-dgvb; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.alpha-dgvb" description="cleanup module">
+    <delete dir="${alpha-dgvb.output.dir}"/>
+    <delete dir="${alpha-dgvb.testoutput.dir}"/>
+  </target>
+</project>

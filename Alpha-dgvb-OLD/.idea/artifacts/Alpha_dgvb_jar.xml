@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Alpha-dgvb:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Alpha_dgvb_jar</output-path>
+    <root id="archive" name="Alpha-dgvb.jar">
+      <element id="module-output" name="Alpha-dgvb" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/opencv-3.0.0/build/bin/opencv-300.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
